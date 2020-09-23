@@ -1,15 +1,98 @@
-import { Component, OnInit } from '@angular/core';
+// tslint:disable-next-line: ordered-imports
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { User } from '../_models/user';
+// tslint:disable-next-line: ordered-imports
+import { AlertifyService } from '../_services/alertify.service';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  @Output() public cancelRegister = new EventEmitter();
+  public user: User;
+  public registerForm: FormGroup;
+  public bsConfig: Partial<BsDatepickerConfig>;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertify: AlertifyService,
+    private fb: FormBuilder,
+  ) { }
 
-  ngOnInit() {
+  // tslint:disable-next-line: typedef
+  public ngOnInit() {
+    this.bsConfig = {
+      containerClass: 'theme-red',
+    };
+    this.createRegisterForm();
   }
 
+  // tslint:disable-next-line: typedef
+  public createRegisterForm() {
+    this.registerForm = this.fb.group(
+      {
+        gender: ['male'],
+        username: ['', Validators.required],
+        // tslint:disable-next-line: object-literal-sort-keys
+        knownAs: ['', Validators.required],
+        dateOfBirth: [null, Validators.required],
+        city: ['', Validators.required],
+        country: ['', Validators.required],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.maxLength(8),
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      { validator: this.passwordMatchValidator },
+    );
+  }
+
+  // tslint:disable-next-line: typedef
+  public passwordMatchValidator(g: FormGroup) {
+    return g.get('password').value === g.get('confirmPassword').value
+      ? null
+      : { mismatch: true };
+  }
+
+  // tslint:disable-next-line: typedef
+  public register() {
+    if (this.registerForm.valid) {
+      this.user = Object.assign({}, this.registerForm.value);
+      this.authService.register(this.user).subscribe(
+        () => {
+          this.alertify.success('Registration succesful');
+        },
+        (error) => {
+          this.alertify.error(error);
+        },
+        () => {
+          this.authService.login(this.user).subscribe(() => {
+            this.router.navigate(['/members']);
+          });
+        },
+      );
+    }
+  }
+
+  // tslint:disable-next-line: typedef
+  public cancel() {
+    this.cancelRegister.emit(false);
+  }
 }
