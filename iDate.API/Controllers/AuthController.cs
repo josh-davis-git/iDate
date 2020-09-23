@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using iDate.API.Data;
-using iDate.API.Dtos;
+using iDate.API.DTOs;
 using iDate.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

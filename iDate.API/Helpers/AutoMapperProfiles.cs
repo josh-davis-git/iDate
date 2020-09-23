@@ -1,6 +1,6 @@
 using System.Linq;
 using AutoMapper;
-using iDate.API.Dtos;
+using iDate.API.DTOs;
 using iDate.API.Models;
 
 namespace iDate.API.Helpers

@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using iDate.API.Data;
-using iDate.API.Dtos;
+using iDate.API.DTOs;
 using iDate.API.Helpers;
 using iDate.API.Models;
 using Microsoft.AspNetCore.Authorization;
