@@ -1,51 +1,46 @@
-// tslint:disable-next-line: ordered-imports
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
-import { BsDatepickerConfig } from 'ngx-bootstrap';
-import { User } from '../_models/user';
-// tslint:disable-next-line: ordered-imports
-import { AlertifyService } from '../_services/alertify.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { AlertifyService } from '../_services/alertify.service';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder
+} from '@angular/forms';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { User } from '../_models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  @Output() public cancelRegister = new EventEmitter();
-  public user: User;
-  public registerForm: FormGroup;
-  public bsConfig: Partial<BsDatepickerConfig>;
+  @Output() cancelRegister = new EventEmitter();
+  user: User;
+  registerForm: FormGroup;
+  bsConfig: Partial<BsDatepickerConfig>;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private alertify: AlertifyService,
-    private fb: FormBuilder,
-  ) { }
+    private fb: FormBuilder
+  ) {}
 
-  // tslint:disable-next-line: typedef
-  public ngOnInit() {
+  ngOnInit() {
     this.bsConfig = {
-      containerClass: 'theme-red',
+      containerClass: 'theme-red'
     };
     this.createRegisterForm();
   }
 
-  // tslint:disable-next-line: typedef
-  public createRegisterForm() {
+  createRegisterForm() {
     this.registerForm = this.fb.group(
       {
         gender: ['male'],
         username: ['', Validators.required],
-        // tslint:disable-next-line: object-literal-sort-keys
         knownAs: ['', Validators.required],
         dateOfBirth: [null, Validators.required],
         city: ['', Validators.required],
@@ -55,44 +50,41 @@ export class RegisterComponent implements OnInit {
           [
             Validators.required,
             Validators.minLength(4),
-            Validators.maxLength(8),
-          ],
+            Validators.maxLength(8)
+          ]
         ],
-        confirmPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required]
       },
-      { validator: this.passwordMatchValidator },
+      { validator: this.passwordMatchValidator }
     );
   }
 
-  // tslint:disable-next-line: typedef
-  public passwordMatchValidator(g: FormGroup) {
+  passwordMatchValidator(g: FormGroup) {
     return g.get('password').value === g.get('confirmPassword').value
       ? null
       : { mismatch: true };
   }
 
-  // tslint:disable-next-line: typedef
-  public register() {
+  register() {
     if (this.registerForm.valid) {
       this.user = Object.assign({}, this.registerForm.value);
       this.authService.register(this.user).subscribe(
         () => {
           this.alertify.success('Registration succesful');
         },
-        (error) => {
+        error => {
           this.alertify.error(error);
         },
         () => {
           this.authService.login(this.user).subscribe(() => {
             this.router.navigate(['/members']);
           });
-        },
+        }
       );
     }
   }
 
-  // tslint:disable-next-line: typedef
-  public cancel() {
+  cancel() {
     this.cancelRegister.emit(false);
   }
 }

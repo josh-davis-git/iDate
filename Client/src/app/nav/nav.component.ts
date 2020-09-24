@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
-// tslint:disable-next-line: ordered-imports
 import { AlertifyService } from '../_services/alertify.service';
-// tslint:disable-next-line: ordered-imports
 import { Router } from '@angular/router';
 
 @Component({
@@ -41,7 +39,6 @@ export class NavComponent implements OnInit {
   loggedIn() {
     return this.authService.loggedIn();
   }
-
 
   logout() {
     localStorage.removeItem('token');
