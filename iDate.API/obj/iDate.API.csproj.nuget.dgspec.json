@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\iDate.API.csproj": {}
+    "C:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\iDate.API.csproj": {}
   },
   "projects": {
-    "c:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\iDate.API.csproj": {
+    "C:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\iDate.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\iDate.API.csproj",
+        "projectUniqueName": "C:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\iDate.API.csproj",
         "projectName": "iDate.API",
-        "projectPath": "c:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\iDate.API.csproj",
+        "projectPath": "C:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\iDate.API.csproj",
         "packagesPath": "C:\\Users\\joshd\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\obj\\",
+        "outputPath": "C:\\Users\\joshd\\Documents\\GitHub\\iDate\\iDate.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
