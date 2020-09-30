@@ -1,0 +1,1 @@
+const javaScriptiDate = [!code - javascript];
